@@ -1,7 +1,8 @@
 var express = require("express");
-var mongojs = require("mongojs");
+var mongoose = require("mongoose");
 var cheerio = require("cheerio");
 var axios = require("axios");
+var expressHandlebars = require("express-handlebars");
 var app = express();
 
 // Set up port to be either the host's designated port or 3000

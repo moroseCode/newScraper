@@ -6,7 +6,8 @@ var db = require("../models");
 module.exports = function(router) {
   router.get("/", function(req, res) {
     db.Headlines.find({})
-      .sort({ date: -1 })
+      .populate("comments")
+      .sort({ _id: -1 })
       .then(function(data) {
         if (data.length === 0) {
           res.render("empty");
@@ -61,10 +62,7 @@ module.exports = function(router) {
         };
         console.log(result);
         db.Headlines.create(result)
-          .then(function(dbHeadline) {
-            // View the added result in the console
-            console.log(dbHeadline);
-          })
+          .then(function(dbHeadline) {})
           .catch(function(err) {
             // If an error occurred, log it
             console.log(err);
@@ -75,9 +73,38 @@ module.exports = function(router) {
     });
   });
   router.post("/comments", function(req, res) {
-    db.Note.create(req.body)
+    db.Comments.create(req.body)
       .then(function(dbNote) {
         // View the added result in the console
+        db.Headlines.findByIdAndUpdate(
+          dbNote._headlinesId,
+          { $push: { comments: dbNote._id } },
+          { new: true, upsert: true },
+          function(err, parent) {
+            if (err) throw err;
+          }
+        );
+        res.json(dbNote);
+      })
+      .catch(function(err) {
+        // If an error occurred, log it
+        console.log(err);
+      });
+  });
+
+  router.delete("/comments/:id", function(req, res) {
+    db.Comments.deleteOne({ _id: req.params.id })
+      .then(function(dbNote) {
+        // View the added result in the console
+        db.Headlines.findByIdAndUpdate(
+          dbNote._headlinesId,
+          { $pull: { comments: dbNote._id } },
+          { new: true, upsert: true },
+          function(err, parent) {
+            if (err) throw err;
+            console.log(parent);
+          }
+        );
         res.json(dbNote);
         console.log(dbNote);
       })

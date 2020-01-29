@@ -15,7 +15,8 @@ var headlinesSchema = new Schema({
   summary: {
     type: String,
     required: true
-  }
+  },
+  comments: [{ type: Schema.Types.ObjectId, ref: "Comments" }]
 });
 
 var Headlines = mongoose.model("Headlines", headlinesSchema);

@@ -1,8 +1,10 @@
 # newScraper
+# Name
+Headline Herder
 
 
 # Description
-FriendFinder gives the user a questionnaire with 10 slightly random questions that have been answered by others. Upon their submission, their answers are compared with the others who have filled out the questionnaire and the person with the closest answers is shown as their new best friend. Friendship has never been this simple!
+Headline Herder gives the user up to the minute news from one of the most respected news outlets on the planet, Reuters. Users can click on the top right button to pull in the most recent news articles, see what others have commented, and comment themselves. If they make a mistake they can remove their comment with the click of a button. Each article has a summary and clicking on the title takes them to the actual news article on the Reuters website. Stay informed, let us herd your headlines.
 
 # [Node](https://nodejs.org/en/) Packages Used
   - [axios](https://www.npmjs.com/package/axios)
